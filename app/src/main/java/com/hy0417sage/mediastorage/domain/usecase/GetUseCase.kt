@@ -10,5 +10,5 @@ class GetUseCase @Inject constructor(
 ) {
     fun getFlowData(
         query: String,
-    ): Flow<List<ViewData>> = repository.getSearchFlow(query)
+    ): Flow<List<ViewData>> = repository.getSearchData(query)
 }

@@ -17,7 +17,7 @@ interface KakaoAPI {
     @GET("/v2/search/vclip?")
     suspend fun getSearchVClip(
         @Header("Authorization") key: String,
-        @Query(value = "query", encoded = true) to: String?,
+        @Query(value = "query") query: String?,
     ): ResultSearchVClip
 
 }

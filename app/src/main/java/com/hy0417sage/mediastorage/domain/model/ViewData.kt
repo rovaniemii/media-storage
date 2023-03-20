@@ -6,5 +6,5 @@ data class ViewDataList(
 
 data class ViewData(
     val thumbnail: String,
-    val datetime: String, // 최신부터 나타나도록
+    val datetime: String,
 )
