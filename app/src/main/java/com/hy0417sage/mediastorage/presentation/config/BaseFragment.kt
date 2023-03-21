@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.presentation.views.config
+package com.hy0417sage.mediastorage.presentation.config
 
 import android.os.Bundle
 import android.view.LayoutInflater
