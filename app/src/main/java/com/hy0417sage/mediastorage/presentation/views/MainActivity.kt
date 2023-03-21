@@ -1,8 +1,10 @@
 package com.hy0417sage.mediastorage.presentation.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.hy0417sage.mediastorage.R
 import com.hy0417sage.mediastorage.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,12 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        binding.button.setOnClickListener {
-            //TODO 빈 값 검색 시 HTTP 400 오류처리
-            mainViewModel.thumbnailSearch(binding.searchEditText.text.toString())
-        }
     }
 }

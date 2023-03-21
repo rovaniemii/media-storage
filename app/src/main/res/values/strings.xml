@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">media storage</string>
+    <string name="title_search">Search</string>
+    <string name="title_storage">Storage</string>
 </resources>
