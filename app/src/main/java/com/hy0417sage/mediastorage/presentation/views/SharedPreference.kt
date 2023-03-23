@@ -2,6 +2,7 @@ package com.hy0417sage.mediastorage.presentation.views
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.util.Log
 import com.google.gson.GsonBuilder
 import com.hy0417sage.mediastorage.domain.model.ViewData
 import org.json.JSONObject
@@ -38,6 +39,7 @@ class SharedPreference(context: Context) {
                 like = jsonObject.getBoolean("like"))
             viewDataList.add(viewData)
         }
+        Log.d("실시간인지 체크 : ", "$viewDataList")
         return viewDataList
     }
 }

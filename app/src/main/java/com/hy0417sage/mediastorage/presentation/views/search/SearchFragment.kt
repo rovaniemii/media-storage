@@ -36,10 +36,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
 
         //특정 데이터 클릭 하면 데이터 저장
-        sharedAdapter.setItemClickListener { viewData ->
+        sharedAdapter.setItemClickListener { searchData ->
             // 만약 저장 되어진 데이터면 동작 x
-            if (sharedPreference.getValue(viewData.thumbnail) == null) {
-                sharedPreference.setValue(viewData.thumbnail, viewData.copy(like = true))
+            if (sharedPreference.getValue(searchData.thumbnail) == null) {
+                sharedPreference.setValue(searchData.thumbnail, searchData.copy(like = true))
+                sharedViewModel.storageDataList()
             }
             sharedViewModel.updateLike()
         }

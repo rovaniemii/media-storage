@@ -30,6 +30,7 @@ class StorageFragment : BaseFragment<FragmentStorageBinding>(R.layout.fragment_s
         sharedAdapter.setItemClickListener { data ->
             // 데이터가 클릭되면 pref 삭제
             sharedPreference.deleteValue(data.thumbnail)
+            sharedViewModel.storageDataList()
         }
     }
 }

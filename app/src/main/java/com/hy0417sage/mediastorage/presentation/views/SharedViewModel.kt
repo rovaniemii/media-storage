@@ -16,17 +16,19 @@ class SharedViewModel @Inject constructor(
     private val getUseCase: GetUseCase,
 ) : ViewModel() {
 
+    // 검색 결과 리스트
     private val _searchData = MutableLiveData<List<ViewData>>()
     val searchData: LiveData<List<ViewData>> get() = _searchData
+
+    // 보관 리스트
     private val _storageData = MutableLiveData<List<ViewData>>()
     val storageData: LiveData<List<ViewData>> get() = _storageData
 
     fun thumbnailSearch(subject: String) {
-        var tmp: MutableList<ViewData>
         viewModelScope.launch {
             val quotes = getUseCase.getFlowData(subject)
             quotes.collect { data ->
-                tmp = data as MutableList<ViewData>
+                val tmp = data as MutableList<ViewData>
                 for (i in 0 until tmp.size) {
                     if (sharedPreference.getValue(tmp[i].thumbnail) != null) {
                         tmp[i] = tmp[i].copy(like = true)
@@ -37,18 +39,18 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun updateLike(){
-        var tmp = _searchData.value as MutableList<ViewData>
-        for(i in 0 until (_searchData.value?.size ?: 0)){
-            if (sharedPreference.getValue(tmp[i].thumbnail) != null){
+    // 검색 데이터
+    fun updateLike() {
+        val tmp = searchData.value as MutableList<ViewData>
+        for (i in 0 until tmp.size) {
+            if (sharedPreference.getValue(tmp[i].thumbnail) != null) {
                 tmp[i] = tmp[i].copy(like = true)
             }
         }
         _searchData.value = tmp
     }
 
-
-
+    //저장 데이터에 변경 사항이 발생했다.
     fun storageDataList() {
         _storageData.value = sharedPreference.getAllValue()
     }
