@@ -21,9 +21,9 @@ class StorageFragment : BaseFragment<FragmentStorageBinding>(R.layout.fragment_s
             layoutManager = GridLayoutManager(context, 3)
             adapter = sharedAdapter
         }
-
-        sharedViewModel.viewData.observe(viewLifecycleOwner) { viewDataList ->
-            sharedAdapter.submitList(viewDataList)
+        sharedViewModel.storageData.observe(viewLifecycleOwner) { listData ->
+            sharedAdapter.submitList(listData)
         }
+        sharedViewModel.storageDataList()
     }
 }
