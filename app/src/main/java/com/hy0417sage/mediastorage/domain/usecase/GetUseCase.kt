@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetUseCase @Inject constructor(
     private val repository: Repository,
 ) {
-    fun getFlowData(
+    fun getSearchData(
         query: String,
     ): Flow<List<ViewData>> = repository.getSearchData(query)
 }

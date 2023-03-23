@@ -8,7 +8,7 @@ import com.hy0417sage.mediastorage.domain.model.ViewData
 import org.json.JSONObject
 
 class SharedPreference(context: Context) {
-    private val pref = context.getSharedPreferences("storage", MODE_PRIVATE)
+    val pref = context.getSharedPreferences("storage", MODE_PRIVATE)
     private val editor = pref.edit()
     private var gson = GsonBuilder().create()
 
@@ -36,7 +36,8 @@ class SharedPreference(context: Context) {
             val viewData = ViewData(
                 thumbnail = jsonObject.getString("thumbnail"),
                 datetime = jsonObject.getString("datetime"),
-                like = jsonObject.getBoolean("like"))
+                like = jsonObject.getBoolean("like"),
+                saveTime = jsonObject.getString("saveTime"))
             viewDataList.add(viewData)
         }
         Log.d("실시간인지 체크 : ", "$viewDataList")

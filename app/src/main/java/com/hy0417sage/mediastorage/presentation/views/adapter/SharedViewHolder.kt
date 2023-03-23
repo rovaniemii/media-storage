@@ -16,7 +16,9 @@ class SharedViewHolder(
                 .into(imageView)
             binding.dateTime.text = viewData.datetime.split('T')[0]
 
-            if(!viewData.like){
+            if(viewData.like) {
+                binding.likeView.visibility = View.VISIBLE
+            }else{
                 binding.likeView.visibility = View.GONE
             }
         }

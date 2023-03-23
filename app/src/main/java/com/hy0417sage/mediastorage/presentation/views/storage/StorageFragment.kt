@@ -12,25 +12,25 @@ import com.hy0417sage.mediastorage.presentation.config.BaseFragment
 import com.hy0417sage.mediastorage.presentation.views.SharedViewModel
 
 class StorageFragment : BaseFragment<FragmentStorageBinding>(R.layout.fragment_storage) {
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val viewModel: SharedViewModel by activityViewModels()
     private val sharedAdapter: SharedAdapter = SharedAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setStorageDataList()
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = sharedAdapter
         }
-        sharedViewModel.storageData.observe(viewLifecycleOwner) { listData ->
-            sharedAdapter.submitList(listData)
+
+        viewModel.storageDataList.observe(viewLifecycleOwner) { storageDataList ->
+            sharedAdapter.submitList(storageDataList)
         }
-        sharedViewModel.storageDataList()
 
         sharedAdapter.setItemClickListener { data ->
-            // 데이터가 클릭되면 pref 삭제
             sharedPreference.deleteValue(data.thumbnail)
-            sharedViewModel.storageDataList()
+            viewModel.setStorageDataList()
         }
     }
 }
