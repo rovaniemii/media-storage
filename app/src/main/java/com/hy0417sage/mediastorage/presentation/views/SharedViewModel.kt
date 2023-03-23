@@ -1,11 +1,9 @@
 package com.hy0417sage.mediastorage.presentation.views
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hy0417sage.mediastorage.ApplicationClass
 import com.hy0417sage.mediastorage.ApplicationClass.Companion.sharedPreference
 import com.hy0417sage.mediastorage.domain.model.ViewData
 import com.hy0417sage.mediastorage.domain.usecase.GetUseCase
@@ -24,20 +22,32 @@ class SharedViewModel @Inject constructor(
     val storageData: LiveData<List<ViewData>> get() = _storageData
 
     fun thumbnailSearch(subject: String) {
+        var tmp: MutableList<ViewData>
         viewModelScope.launch {
             val quotes = getUseCase.getFlowData(subject)
             quotes.collect { data ->
-                var tmp = data as MutableList<ViewData>
+                tmp = data as MutableList<ViewData>
                 for (i in 0 until tmp.size) {
                     if (sharedPreference.getValue(tmp[i].thumbnail) != null) {
-                        Log.d("확인", "${sharedPreference.size + 1}")
-                        tmp[i] = tmp[i].copy(like = sharedPreference.size + 1)
+                        tmp[i] = tmp[i].copy(like = true)
                     }
                 }
                 _searchData.value = tmp
             }
         }
     }
+
+    fun updateLike(){
+        var tmp = _searchData.value as MutableList<ViewData>
+        for(i in 0 until (_searchData.value?.size ?: 0)){
+            if (sharedPreference.getValue(tmp[i].thumbnail) != null){
+                tmp[i] = tmp[i].copy(like = true)
+            }
+        }
+        _searchData.value = tmp
+    }
+
+
 
     fun storageDataList() {
         _storageData.value = sharedPreference.getAllValue()

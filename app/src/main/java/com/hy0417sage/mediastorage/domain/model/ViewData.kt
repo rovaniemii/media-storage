@@ -7,6 +7,5 @@ data class ViewDataList(
 data class ViewData(
     val thumbnail: String,
     val datetime: String,
-    val source: String,
-    val like: Int,
+    val like: Boolean,
 )

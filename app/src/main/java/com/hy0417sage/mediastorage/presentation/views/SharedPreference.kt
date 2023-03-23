@@ -9,7 +9,7 @@ import org.json.JSONObject
 class SharedPreference(context: Context) {
     private val pref = context.getSharedPreferences("storage", MODE_PRIVATE)
     private val editor = pref.edit()
-    private val gson = GsonBuilder().create()
+    private var gson = GsonBuilder().create()
 
     var size: Int = pref.all.size
 
@@ -35,8 +35,7 @@ class SharedPreference(context: Context) {
             val viewData = ViewData(
                 thumbnail = jsonObject.getString("thumbnail"),
                 datetime = jsonObject.getString("datetime"),
-                source = jsonObject.getString("source"),
-                like = jsonObject.getInt("like"))
+                like = jsonObject.getBoolean("like"))
             viewDataList.add(viewData)
         }
         return viewDataList

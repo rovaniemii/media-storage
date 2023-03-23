@@ -11,8 +11,7 @@ fun imageMapper(imageData: List<ImageDocuments>): List<ViewData> {
         ViewData(
             it.thumbnail_url,
             it.datetime,
-            "image",
-            -1,
+            false,
         )
     }
 }
@@ -22,9 +21,7 @@ fun vClipMapper(vClipData: List<VClipDocuments>): List<ViewData> {
         ViewData(
             it.thumbnail,
             it.datetime,
-            "vClip",
-            -1,
-
+            false,
         )
     }
 }
