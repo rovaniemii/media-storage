@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hy0417sage.mediastorage.R
 import com.hy0417sage.mediastorage.databinding.FragmentStorageBinding
 import com.hy0417sage.mediastorage.presentation.config.BaseFragment
 import com.hy0417sage.mediastorage.presentation.views.SharedViewModel
 import com.hy0417sage.mediastorage.presentation.views.adapter.StorageAdapter
 
-class StorageFragment : BaseFragment<FragmentStorageBinding>(R.layout.fragment_storage) {
+class StorageFragment : BaseFragment<FragmentStorageBinding>(FragmentStorageBinding::inflate) {
     private val viewModel: SharedViewModel by activityViewModels()
     private val storageAdapter: StorageAdapter = StorageAdapter()
 

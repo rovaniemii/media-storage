@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hy0417sage.mediastorage.databinding.LayoutViewHolderBinding
 import com.hy0417sage.mediastorage.domain.model.ViewData
 
-// TODO : Base로 따로 뺄 예정
 abstract class SharedAdapter : ListAdapter<ViewData, RecyclerView.ViewHolder>(SharedDiffUtil()) {
 
     override fun onCreateViewHolder(

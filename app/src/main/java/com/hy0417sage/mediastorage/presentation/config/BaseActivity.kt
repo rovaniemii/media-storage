@@ -1,19 +1,19 @@
 package com.hy0417sage.mediastorage.presentation.config
 
 import android.os.Bundle
-import androidx.annotation.LayoutRes
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<B : ViewDataBinding>(
-    @LayoutRes private val layoutResId: Int,
+abstract class BaseActivity<VB : ViewBinding>(
+    private val inflate: (LayoutInflater) -> VB
 ) : AppCompatActivity() {
 
-    protected lateinit var binding: B
+    protected lateinit var binding: VB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, layoutResId)
+        binding = inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }

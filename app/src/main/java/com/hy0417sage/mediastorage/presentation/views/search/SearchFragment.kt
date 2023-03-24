@@ -1,16 +1,17 @@
 package com.hy0417sage.mediastorage.presentation.views.search
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hy0417sage.mediastorage.R
 import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding
 import com.hy0417sage.mediastorage.presentation.config.BaseFragment
 import com.hy0417sage.mediastorage.presentation.views.SharedViewModel
 import com.hy0417sage.mediastorage.presentation.views.adapter.SearchAdapter
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
     private val viewModel: SharedViewModel by activityViewModels()
     private val searchAdapter: SearchAdapter = SearchAdapter()
 
@@ -35,4 +36,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             viewModel.updateStorage(searchData)
         }
     }
+
 }
