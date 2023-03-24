@@ -5,16 +5,15 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hy0417sage.mediastorage.ApplicationClass.Companion.sharedPreference
 import com.hy0417sage.mediastorage.R
 import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding
 import com.hy0417sage.mediastorage.presentation.config.BaseFragment
 import com.hy0417sage.mediastorage.presentation.views.SharedViewModel
-import com.hy0417sage.mediastorage.presentation.views.adapter.SharedAdapter
+import com.hy0417sage.mediastorage.presentation.views.adapter.SearchAdapter
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
     private val viewModel: SharedViewModel by activityViewModels()
-    private val sharedAdapter: SharedAdapter = SharedAdapter()
+    private val searchAdapter: SearchAdapter = SearchAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,15 +25,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = sharedAdapter
+            adapter = searchAdapter
         }
 
         viewModel.searchDataList.observe(viewLifecycleOwner) { searchDataList ->
-            sharedAdapter.submitList(searchDataList)
+            searchAdapter.submitList(searchDataList)
+            Log.d("search", "반영 되는거 맞아????????????? $searchDataList")
         }
 
-        sharedAdapter.setItemClickListener { addStorageData -> //클릭해서 StorageData 추가 후 정렬
-            viewModel.storageSorted(addStorageData)
+        searchAdapter.setItemClickListener { searchData ->
+            viewModel.addStorage(searchData)
         }
     }
 }

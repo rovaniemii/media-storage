@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.presentation.views.adapter
+package com.hy0417sage.mediastorage.presentation.config
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hy0417sage.mediastorage.databinding.LayoutViewHolderBinding
 import com.hy0417sage.mediastorage.domain.model.ViewData
 
-class SharedAdapter : ListAdapter<ViewData, RecyclerView.ViewHolder>(SharedDiffUtil()) {
-
-    private lateinit var onItemClickListener: OnItemClickListener
+// TODO : Base로 따로 뺄 예정
+abstract class SharedAdapter : ListAdapter<ViewData, RecyclerView.ViewHolder>(SharedDiffUtil()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,17 +30,6 @@ class SharedAdapter : ListAdapter<ViewData, RecyclerView.ViewHolder>(SharedDiffU
         if (holder is SharedViewHolder) {
             val viewData = getItem(position) as ViewData
             holder.bind(viewData)
-            holder.itemView.setOnClickListener {
-                onItemClickListener.onClick(viewData)
-            }
         }
-    }
-
-    fun interface OnItemClickListener {
-        fun onClick(viewData: ViewData)
-    }
-
-    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
-        this.onItemClickListener = onItemClickListener
     }
 }

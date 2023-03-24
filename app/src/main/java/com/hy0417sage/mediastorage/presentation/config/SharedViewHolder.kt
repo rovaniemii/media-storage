@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.presentation.views.adapter
+package com.hy0417sage.mediastorage.presentation.config
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -14,12 +14,12 @@ class SharedViewHolder(
             Glide.with(binding.root)
                 .load(viewData.thumbnail)
                 .into(imageView)
-            binding.dateTime.text = viewData.datetime.split('T')[0]
+            dateTime.text = viewData.datetime.split('T')[0]
 
             if(viewData.like) {
-                binding.likeView.visibility = View.VISIBLE
+                likeView.visibility = View.VISIBLE
             }else{
-                binding.likeView.visibility = View.GONE
+                likeView.visibility = View.GONE
             }
         }
     }
