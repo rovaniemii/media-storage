@@ -2,8 +2,8 @@ package com.hy0417sage.mediastorage.presentation.views.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.hy0417sage.mediastorage.domain.model.ViewData
-import com.hy0417sage.mediastorage.presentation.config.SharedAdapter
-import com.hy0417sage.mediastorage.presentation.config.SharedViewHolder
+import com.hy0417sage.mediastorage.presentation.views.adapter.shared.SharedAdapter
+import com.hy0417sage.mediastorage.presentation.views.adapter.shared.SharedViewHolder
 
 class SearchAdapter : SharedAdapter() {
 

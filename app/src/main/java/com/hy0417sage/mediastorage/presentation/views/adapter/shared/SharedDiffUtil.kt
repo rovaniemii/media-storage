@@ -1,6 +1,5 @@
-package com.hy0417sage.mediastorage.presentation.config
+package com.hy0417sage.mediastorage.presentation.views.adapter.shared
 
-import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.hy0417sage.mediastorage.domain.model.ViewData
 
@@ -10,7 +9,6 @@ class SharedDiffUtil : DiffUtil.ItemCallback<ViewData>() {
         oldItem: ViewData,
         newItem: ViewData,
     ): Boolean {
-        Log.d("areItemsTheSame " ,  "${oldItem == newItem}")
         return oldItem == newItem
     }
 
@@ -18,8 +16,6 @@ class SharedDiffUtil : DiffUtil.ItemCallback<ViewData>() {
         oldItem: ViewData,
         newItem: ViewData,
     ): Boolean {
-        Log.d("areContentsTheSame " ,  "${oldItem.thumbnail == newItem.thumbnail}")
-        return oldItem.thumbnail == newItem.thumbnail
+        return oldItem== newItem
     }
-
 }

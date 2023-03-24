@@ -1,6 +1,5 @@
 package com.hy0417sage.mediastorage.presentation.views
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,38 +42,24 @@ class SharedViewModel @Inject constructor(
         _storageDataList.value = sharedPreference.getAllValue().sortedBy { it.saveTime }
     }
 
-    // 데이터 저장시 동작
-    fun addStorage(searchData: ViewData) {
+    fun updateStorage(searchData: ViewData) {
         if (sharedPreference.getValue(searchData.thumbnail) == null) {
             sharedPreference.setValue(searchData.thumbnail,
                 searchData.copy(like = true, saveTime = DateUtil.dateAndTime()))
-
-            val storage =
-                sharedPreference.getAllValue()?.sortedBy { it.saveTime } as MutableList<ViewData>?
-            _storageDataList.value = storage
-
-            val search = _searchDataList.value as MutableList<ViewData>
-            val index = search.indexOf(searchData)
-            search[index] = search[index].copy(like = true)
-            Log.d("로그", "삽입 데이터 반영 되었나? ${search[index]}")
-            _searchDataList.value = search
-        }else{
-            deleteStorageData(searchData)
+            changeData(searchData, true)
+        } else {
+            sharedPreference.deleteValue(searchData.thumbnail)
+            changeData(searchData, false)
         }
     }
 
-    //TODO 코드 리팩토링!
-    fun deleteStorageData(storageData: ViewData) {
-        if (sharedPreference.getValue(storageData.thumbnail) != null) {
-            sharedPreference.deleteValue(storageData.thumbnail)
-            val storage = sharedPreference.getAllValue()?.sortedBy { it.saveTime } as MutableList<ViewData>?
-            _storageDataList.value = storage
-
-            val search = _searchDataList.value as MutableList<ViewData>
-            val index = search.indexOf(storageData)
-            search[index] = search[index].copy(like = false)
-            Log.d("로그", "삭제 데이터 반영 되었나? ${search[index]}")
-            _searchDataList.value = search
-        }
+    private fun changeData(viewData: ViewData, like: Boolean) {
+        val storage =
+            sharedPreference.getAllValue()?.sortedBy { it.saveTime }?.toMutableList() ?: mutableListOf()
+        _storageDataList.value = storage
+        val search = _searchDataList.value?.toMutableList() ?: mutableListOf()
+        val index = search.indexOf(viewData)
+        search[index] = search[index].copy(like = like)
+        _searchDataList.value = search
     }
 }

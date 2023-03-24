@@ -2,17 +2,14 @@ package com.hy0417sage.mediastorage.presentation.views
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.util.Log
 import com.google.gson.GsonBuilder
 import com.hy0417sage.mediastorage.domain.model.ViewData
 import org.json.JSONObject
 
 class SharedPreference(context: Context) {
-    val pref = context.getSharedPreferences("storage", MODE_PRIVATE)
+    private val pref = context.getSharedPreferences("storage", MODE_PRIVATE)
     private val editor = pref.edit()
     private var gson = GsonBuilder().create()
-
-    var size: Int = pref.all.size
 
     fun getValue(key: String): ViewData? {
         val value = pref.getString(key, null)
@@ -40,7 +37,6 @@ class SharedPreference(context: Context) {
                 saveTime = jsonObject.getString("saveTime"))
             viewDataList.add(viewData)
         }
-        Log.d("실시간인지 체크 : ", "$viewDataList")
         return viewDataList
     }
 }

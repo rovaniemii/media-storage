@@ -1,7 +1,6 @@
 package com.hy0417sage.mediastorage.presentation.views.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,11 +29,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
         viewModel.searchDataList.observe(viewLifecycleOwner) { searchDataList ->
             searchAdapter.submitList(searchDataList)
-            Log.d("search", "반영 되는거 맞아????????????? $searchDataList")
         }
 
         searchAdapter.setItemClickListener { searchData ->
-            viewModel.addStorage(searchData)
+            viewModel.updateStorage(searchData)
         }
     }
 }
