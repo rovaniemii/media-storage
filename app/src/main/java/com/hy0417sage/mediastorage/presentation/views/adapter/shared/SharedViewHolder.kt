@@ -11,14 +11,14 @@ class SharedViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(viewData: ViewData) {
         with(binding) {
+            date.text =
+                "${viewData.datetime.split('T')[0]} ${viewData.datetime.split('T')[1].split('.')[0]}"
             Glide.with(binding.root)
                 .load(viewData.thumbnail)
                 .into(imageView)
-            dateTime.text = viewData.datetime.split('T')[0]
-
-            if(viewData.like) {
+            if (viewData.like) {
                 likeView.visibility = View.VISIBLE
-            }else{
+            } else {
                 likeView.visibility = View.GONE
             }
         }

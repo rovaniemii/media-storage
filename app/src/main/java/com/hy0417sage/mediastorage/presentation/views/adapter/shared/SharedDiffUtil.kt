@@ -16,6 +16,6 @@ class SharedDiffUtil : DiffUtil.ItemCallback<ViewData>() {
         oldItem: ViewData,
         newItem: ViewData,
     ): Boolean {
-        return oldItem== newItem
+        return oldItem == newItem
     }
 }

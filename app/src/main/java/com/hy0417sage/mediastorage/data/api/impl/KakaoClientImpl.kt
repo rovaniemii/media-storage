@@ -12,7 +12,7 @@ object KakaoClientImpl : KakaoClient {
 
     override fun create(): KakaoAPI {
         val logger =
-            HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
+            HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
         val client = OkHttpClient.Builder()
             .addInterceptor(logger)

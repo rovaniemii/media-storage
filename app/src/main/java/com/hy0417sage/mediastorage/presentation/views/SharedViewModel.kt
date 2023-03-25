@@ -21,19 +21,26 @@ class SharedViewModel @Inject constructor(
     val searchDataList: LiveData<List<ViewData>> get() = _searchDataList
     private val _storageDataList = MutableLiveData<List<ViewData>?>()
     val storageDataList: MutableLiveData<List<ViewData>?> get() = _storageDataList
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: MutableLiveData<String> get() = _errorMessage
 
     fun thumbnailSearch(subject: String) {
         viewModelScope.launch {
             val quotes = getUseCase.getSearchData(subject)
             quotes.collect { data ->
-                val search = data as MutableList<ViewData>
-                for (i in 0 until search.size) {
-                    if (sharedPreference.getValue(search[i].thumbnail) != null) {
-                        search[i] = search[i].copy(like = true)
+                if (data.isNotEmpty()) {
+                    val search = data as MutableList<ViewData>
+                    for (i in 0 until search.size) {
+                        if (sharedPreference.getValue(search[i].thumbnail) != null) {
+                            search[i] = search[i].copy(like = true)
+                        }
                     }
+                    _searchDataList.value = search
+                    _errorMessage.value = ""
+                } else {
+                    _errorMessage.value = "결과가 없습니다."
+                    _searchDataList.value = arrayListOf()
                 }
-                _searchDataList.value = search
-                _searchDataList.postValue(search)
             }
         }
     }
@@ -55,7 +62,8 @@ class SharedViewModel @Inject constructor(
 
     private fun changeData(viewData: ViewData, like: Boolean) {
         val storage =
-            sharedPreference.getAllValue()?.sortedBy { it.saveTime }?.toMutableList() ?: mutableListOf()
+            sharedPreference.getAllValue()?.sortedBy { it.saveTime }?.toMutableList()
+                ?: mutableListOf()
         _storageDataList.value = storage
         val search = _searchDataList.value?.toMutableList() ?: mutableListOf()
         val index = search.indexOf(viewData)

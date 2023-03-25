@@ -1,9 +1,7 @@
 package com.hy0417sage.mediastorage.presentation.views.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding
@@ -21,6 +19,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.searchButton.setOnClickListener {
             //TODO (1)빈 값 검색 시 HTTP 400 오류처리, (2)검색 결과가 안나올 경우 text message 처리
             viewModel.thumbnailSearch(binding.searchEditText.text.toString())
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            binding.textErrorMessage.text = viewModel.errorMessage.value
         }
 
         binding.recyclerView.apply {
