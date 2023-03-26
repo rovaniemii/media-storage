@@ -26,9 +26,9 @@ class SharedViewModel @Inject constructor(
     val storageDataList: MutableLiveData<List<ViewData>?> get() = _storageDataList
 
     var keyWord: String = ""
-    var page: Int = 1
+    var callPage: Int = 1
 
-    fun thumbnailSearch(subject: String) {
+    fun thumbnailSearch(subject: String, page: Int = callPage) {
         viewModelScope.launch {
             val quotes = getUseCase.getSearchData(subject, page, 10)
             if (quotes.isNotEmpty()) {
@@ -38,13 +38,13 @@ class SharedViewModel @Inject constructor(
                         search[i] = search[i].copy(like = true)
                     }
                 }
-                if (page == 1){
+                if (page == 1) {
                     _searchDataList.value = search
-                }else {
+                } else {
                     val view = _searchDataList.value?.toMutableList() ?: mutableListOf()
                     _searchDataList.value = (view + search).sortedByDescending { it.datetime }
                 }
-                page += 1
+                callPage++
             }
         }
     }

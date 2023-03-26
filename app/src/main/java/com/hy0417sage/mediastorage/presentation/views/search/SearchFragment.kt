@@ -40,8 +40,7 @@ class SearchFragment : Fragment() {
         binding.searchButton.setOnClickListener {
             if (viewModel.keyWord != binding.searchEditText.text.toString()) {
                 viewModel.keyWord = binding.searchEditText.text.toString()
-                viewModel.page = 1
-                viewModel.thumbnailSearch(viewModel.keyWord)
+                viewModel.thumbnailSearch(viewModel.keyWord, 1)
             }
         }
 
