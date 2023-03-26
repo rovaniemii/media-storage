@@ -14,18 +14,14 @@ class RemoteDataSourceImpl @Inject constructor(
     override suspend fun getResultSearchImage(
         apiKey: String,
         keyWord: String,
-    ): Flow<ResultSearchImage> {
-        return flow {
-            emit(kakaoAPI.getSearchImage(apiKey, keyWord))
-        }
+    ): ResultSearchImage {
+        return kakaoAPI.getSearchImage(apiKey, keyWord)
     }
 
     override suspend fun getResultSearchVClip(
         apiKey: String,
         keyWord: String,
-    ): Flow<ResultSearchVClip> {
-        return flow {
-            emit(kakaoAPI.getSearchVClip(apiKey, keyWord))
-        }
+    ): ResultSearchVClip {
+        return kakaoAPI.getSearchVClip(apiKey, keyWord)
     }
 }

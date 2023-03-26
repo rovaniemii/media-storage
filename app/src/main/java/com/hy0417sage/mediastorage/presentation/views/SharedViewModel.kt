@@ -1,5 +1,6 @@
 package com.hy0417sage.mediastorage.presentation.views
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,22 +30,26 @@ class SharedViewModel @Inject constructor(
     fun thumbnailSearch(subject: String) {
         viewModelScope.launch {
             val quotes = getUseCase.getSearchData(subject)
-            quotes.collect { data ->
-                if (data.isNotEmpty()) {
-                    val search = data as MutableList<ViewData>
-                    for (i in 0 until search.size) {
-                        if (sharedPreference.getValue(search[i].thumbnail) != null) {
-                            search[i] = search[i].copy(like = true)
-                        }
+            if (quotes.isNotEmpty()) {
+                Log.d("확인 ", "$quotes")
+                val search = quotes as MutableList<ViewData>
+                for (i in 0 until search.size) {
+                    if (sharedPreference.getValue(search[i].thumbnail) != null) {
+                        search[i] = search[i].copy(like = true)
                     }
-                    _errorMessage.value = ""
-                    scroll.value = search
-                    _searchDataList.value = search.subList(0, 10)
-                } else {
-                    _errorMessage.value = "결과가 없습니다."
-                    _searchDataList.value = arrayListOf()
                 }
+                _errorMessage.value = ""
+                scroll.value = search
+                _searchDataList.value = if (search.size < 10){
+                    search
+                }else{
+                    search.subList(0, 10)
+                }
+            } else {
+                _errorMessage.value = "결과가 없습니다."
+                _searchDataList.value = arrayListOf()
             }
+
         }
     }
 
@@ -84,6 +89,8 @@ class SharedViewModel @Inject constructor(
         val start = currentSize?.plus(1) ?: 0
         val mid = currentSize?.plus(10) ?: 0
         val last = currentSize?.rem(10) ?: 0
+
+        Log.d("확인", "currentSize:$currentSize  start$start   mid$mid  last$last")
 
         if ((currentSize?.plus(10) ?: 0) > scroll.size) {
             _searchDataList.value =
