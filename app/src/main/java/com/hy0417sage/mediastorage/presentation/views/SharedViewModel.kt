@@ -30,8 +30,9 @@ class SharedViewModel @Inject constructor(
 
     fun thumbnailSearch(subject: String, page: Int = callPage) {
         viewModelScope.launch {
-            val quotes = getUseCase.getSearchData(subject, page, 10)
+            val quotes = getUseCase.getSearchData(subject, page, 14)
             if (quotes.isNotEmpty()) {
+                _errorMessage.value = ""
                 val search = quotes.toMutableList()
                 for (i in 0 until search.size) {
                     if (sharedPreference.getValue(search[i].thumbnail) != null) {
@@ -45,6 +46,11 @@ class SharedViewModel @Inject constructor(
                     _searchDataList.value = (view + search).sortedByDescending { it.datetime }
                 }
                 callPage++
+            }else{
+                if (page == 1){
+                    _searchDataList.value = arrayListOf()
+                    _errorMessage.value = "결과가 없습니다."
+                }
             }
         }
     }
