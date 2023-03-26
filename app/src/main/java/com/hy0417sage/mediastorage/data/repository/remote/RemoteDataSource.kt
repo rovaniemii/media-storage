@@ -8,11 +8,15 @@ interface RemoteDataSource {
     suspend fun getResultSearchImage(
         apiKey: String,
         keyWord: String,
+        page: Int,
+        size: Int,
     ): ResultSearchImage
 
     suspend fun getResultSearchVClip(
         apiKey: String,
         keyWord: String,
+        page: Int,
+        size: Int,
     ): ResultSearchVClip
 
 }

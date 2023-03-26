@@ -5,4 +5,5 @@ data class ViewData(
     val datetime: String,
     val like: Boolean,
     val saveTime: String,
+    val source: String,
 )

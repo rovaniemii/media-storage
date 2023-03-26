@@ -34,7 +34,9 @@ class SharedPreference(context: Context) {
                 thumbnail = jsonObject.getString("thumbnail"),
                 datetime = jsonObject.getString("datetime"),
                 like = jsonObject.getBoolean("like"),
-                saveTime = jsonObject.getString("saveTime"))
+                saveTime = jsonObject.getString("saveTime"),
+                source = jsonObject.getString("source"),
+            )
             viewDataList.add(viewData)
         }
         return viewDataList

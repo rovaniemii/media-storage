@@ -1,6 +1,5 @@
 package com.hy0417sage.mediastorage.presentation.views
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,38 +17,35 @@ class SharedViewModel @Inject constructor(
     private val getUseCase: GetUseCase,
 ) : ViewModel() {
 
-    private val scroll = MutableLiveData<List<ViewData>>()
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: MutableLiveData<String> get() = _errorMessage
 
-    private val _searchDataList = MutableLiveData<List<ViewData>>()
+    private val _searchDataList = MutableLiveData<List<ViewData>>(arrayListOf())
     val searchDataList: LiveData<List<ViewData>> get() = _searchDataList
     private val _storageDataList = MutableLiveData<List<ViewData>?>()
     val storageDataList: MutableLiveData<List<ViewData>?> get() = _storageDataList
 
+    var keyWord: String = ""
+    var page: Int = 1
+
     fun thumbnailSearch(subject: String) {
         viewModelScope.launch {
-            val quotes = getUseCase.getSearchData(subject)
+            val quotes = getUseCase.getSearchData(subject, page, 10)
             if (quotes.isNotEmpty()) {
-                Log.d("확인 ", "$quotes")
-                val search = quotes as MutableList<ViewData>
+                val search = quotes.toMutableList()
                 for (i in 0 until search.size) {
                     if (sharedPreference.getValue(search[i].thumbnail) != null) {
                         search[i] = search[i].copy(like = true)
                     }
                 }
-                _errorMessage.value = ""
-                scroll.value = search
-                _searchDataList.value = if (search.size < 10){
-                    search
-                }else{
-                    search.subList(0, 10)
+                if (page == 1){
+                    _searchDataList.value = search
+                }else {
+                    val view = _searchDataList.value?.toMutableList() ?: mutableListOf()
+                    _searchDataList.value = (view + search).sortedByDescending { it.datetime }
                 }
-            } else {
-                _errorMessage.value = "결과가 없습니다."
-                _searchDataList.value = arrayListOf()
+                page += 1
             }
-
         }
     }
 
@@ -73,31 +69,11 @@ class SharedViewModel @Inject constructor(
     //좋아요 데이터가 변화 되었다면, fragment 두 화면에서 구독중인 데이터 storageDataList, searchDataList 데이터를 업데이트해줍니다.
     private fun changeData(viewData: ViewData, like: Boolean) {
         val storage =
-            sharedPreference.getAllValue()?.sortedBy { it.saveTime }?.toMutableList()
-                ?: mutableListOf()
+            sharedPreference.getAllValue().sortedBy { it.saveTime }.toMutableList()
         _storageDataList.value = storage
         val search = _searchDataList.value?.toMutableList() ?: mutableListOf()
         val index = search.indexOf(viewData)
         search[index] = search[index].copy(like = like)
         _searchDataList.value = search
-    }
-
-    //스크롤을 통해 다음 페이지를 불러옵니다.
-    fun scrollLoadData() {
-        val currentSize = _searchDataList.value?.size
-        val scroll = scroll.value?.toMutableList() ?: mutableListOf()
-        val start = currentSize?.plus(1) ?: 0
-        val mid = currentSize?.plus(10) ?: 0
-        val last = currentSize?.rem(10) ?: 0
-
-        Log.d("확인", "currentSize:$currentSize  start$start   mid$mid  last$last")
-
-        if ((currentSize?.plus(10) ?: 0) > scroll.size) {
-            _searchDataList.value =
-                _searchDataList.value?.plus(scroll.subList(start, start + last - 2))
-        } else {
-            _searchDataList.value =
-                _searchDataList.value?.plus(scroll.subList(start, mid))
-        }
     }
 }

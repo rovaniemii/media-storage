@@ -17,6 +17,7 @@ import com.hy0417sage.mediastorage.presentation.views.adapter.SearchAdapter
 * 첫 번째 fragment : 검색 결과 화면
 * */
 class SearchFragment : Fragment() {
+
     private var _binding: FragmentSearchBinding? = null
     val binding: FragmentSearchBinding get() = _binding!!
 
@@ -37,7 +38,11 @@ class SearchFragment : Fragment() {
 
         //검색어를 입력할 수 있습니다.
         binding.searchButton.setOnClickListener {
-            viewModel.thumbnailSearch(binding.searchEditText.text.toString())
+            if (viewModel.keyWord != binding.searchEditText.text.toString()) {
+                viewModel.keyWord = binding.searchEditText.text.toString()
+                viewModel.page = 1
+                viewModel.thumbnailSearch(viewModel.keyWord)
+            }
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
@@ -58,7 +63,7 @@ class SearchFragment : Fragment() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount - 1
 
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
-                    viewModel.scrollLoadData()
+                    viewModel.thumbnailSearch(binding.searchEditText.text.toString())
                 }
             }
         })

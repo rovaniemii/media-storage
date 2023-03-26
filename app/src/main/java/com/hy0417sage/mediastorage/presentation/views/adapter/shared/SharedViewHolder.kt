@@ -13,6 +13,7 @@ class SharedViewHolder(
         with(binding) {
             date.text =
                 "${viewData.datetime.split('T')[0]} ${viewData.datetime.split('T')[1].split('.')[0]}"
+            keyWord.text = viewData.source
             Glide.with(binding.root)
                 .load(viewData.thumbnail)
                 .into(imageView)

@@ -9,5 +9,7 @@ class GetUseCase @Inject constructor(
 ) {
     suspend fun getSearchData(
         query: String,
-    ): List<ViewData> = repository.getSearchData(query)
+        page: Int,
+        size: Int,
+    ): List<ViewData> = repository.getSearchData(query, page, size)
 }

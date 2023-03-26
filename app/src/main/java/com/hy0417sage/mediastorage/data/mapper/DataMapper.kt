@@ -13,6 +13,7 @@ fun imageMapper(imageData: List<ImageDocuments>): List<ViewData> {
             it.datetime,
             false,
             "",
+            "image",
         )
     }
 }
@@ -24,6 +25,7 @@ fun vClipMapper(vClipData: List<VClipDocuments>): List<ViewData> {
             it.datetime,
             false,
             "",
+            "vClip",
         )
     }
 }

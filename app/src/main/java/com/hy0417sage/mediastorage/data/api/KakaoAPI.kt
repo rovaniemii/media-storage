@@ -11,13 +11,19 @@ interface KakaoAPI {
     @GET("/v2/search/image?")
     suspend fun getSearchImage(
         @Header("Authorization") key: String,
-        @Query("query") query: String?,
+        @Query("query") query: String,
+        @Query("sort") sort: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
     ): ResultSearchImage
 
     @GET("/v2/search/vclip?")
     suspend fun getSearchVClip(
         @Header("Authorization") key: String,
-        @Query(value = "query") query: String?,
+        @Query("query") query: String,
+        @Query("sort") sort: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
     ): ResultSearchVClip
 
 }
