@@ -15,6 +15,3 @@
     - DiffUtil
     - ListAdapter
   - SharedPreferences
-
-### 데이터 흐름도
-<img width="800" alt="스크린샷 2023-03-25 오후 9 04 49" src="https://user-images.githubusercontent.com/97173983/227716387-1c572fd1-7124-4277-8ccf-e19acc6165de.png">
