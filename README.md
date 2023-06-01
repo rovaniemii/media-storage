@@ -1,5 +1,5 @@
 # media-storage
-이미지, 동영상 검색 API를 활용해 이미지를 검색하고 보관함에 수집하는 안드로이드 앱입니다. 
+카카오 이미지, 동영상 검색 API를 활용해 썸네일 이미지를 검색하고 보관함에 수집하는 안드로이드 앱입니다. 
 
 ## Tech stack & Open-source libraries
 ### Android
@@ -37,11 +37,7 @@
       - 검색 결과에서 보관했던 이미지들이 보관한 순서대로 보이도록 했습니다.
       - 보관한 이미지 리스트는 SharedPreferences 사용하여 앱 재시작 후 다시 보이게 구현했습니다.
       
-#### ListAdapter, DiffUtil 사용으로 데이터 불러오는 속도 개선
-- RecyclerView를 사용하다보니 하나의 데이터를 변경하는 경우에도 전체 데이터를 리프레쉬 해야하는 불필요한 과정을 겪게 되었습니다. ListAdapter와 DiffUtil을 적용 후 데이터의 equals와 hashcode로 변경이 필요한 코드만 변경할 수 있게 되어 데이터 불러오는 속도를 높일 수 있었습니다.
-
-#### 기술에 맞는 코드 컨벤션을 지키고 사소한 부분도 코드 통일성을 지키기 위해 노력
-- MVVM 패턴은 View와 ViewModel는 단방향 통신을 하니 ViewModel에서 get이라는 네이밍을 사용하는 것이 아키텍쳐 스타일과 맞지 않아 그에 맞는 네이밍을 하려 노력했습니다. 또한 build.gradle 파일에 아래의 코드 추가 시 스타일을 ‘ ‘으로 통일하기도 하며 일관된 스타일을 고수하려 했습니다. control+command+l을 습관화 하며 코드 정렬에 힘썼습니다. 이런 노력으로 기술의 이해도를 높이고 더 간단하고 읽기 쉬운 코드를 작성할 수 있게 되었습니다.
-
-#### MVVM 패턴 + Repository 패턴을 적용해 코드 최적화
-- MVP의 경우 Presenter는 뷰의 데이터가 변경되면 뷰 변경 요청을 보내는 양방향 통신을 하지만, ViewModel은 뷰의 데이터를 관찰하다 변경되는 변경을 저장할 뿐인 단방향 통신을 하여 뷰와 뷰 모델간 1:n관계를 정의합니다. 1:n관계를 통해 중복되는 코드의 수를 줄여 코드 최적화를 하기위해 노력하였습니다.
+| | | |
+|---|---|---|
+|<img src="https://user-images.githubusercontent.com/97173983/216802940-23d962e3-4d50-4c1e-b917-c4a9ff8ac909.gif" width="250">|<img src="https://user-images.githubusercontent.com/97173983/216802922-c3023c5d-2eee-4d50-aab4-3eb70b6edb22.gif" width="250">|<img src="https://user-images.githubusercontent.com/97173983/216802953-e6315f59-7715-4b9a-b947-54b2b96a6b80.gif" width="250">|
+| | | |
