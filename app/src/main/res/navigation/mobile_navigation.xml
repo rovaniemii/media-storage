@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.hy0417sage.mediastorage.presentation.views.search.SearchFragment"
+        android:name="com.hy0417sage.mediastorage.views.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_storage"
-        android:name="com.hy0417sage.mediastorage.presentation.views.storage.StorageFragment"
+        android:name="com.hy0417sage.mediastorage.views.storage.StorageFragment"
         android:label="@string/title_storage"
         tools:layout="@layout/fragment_storage" />
 

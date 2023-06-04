@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MediaStorage">
         <activity
-            android:name=".presentation.views.MainActivity"
+            android:name="com.hy0417sage.mediastorage.views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
