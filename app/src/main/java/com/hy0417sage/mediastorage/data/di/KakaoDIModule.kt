@@ -3,8 +3,10 @@ package com.hy0417sage.mediastorage.data.di
 import com.hy0417sage.mediastorage.data.api.KakaoAPI
 import com.hy0417sage.mediastorage.data.api.impl.KakaoClientImpl
 import com.hy0417sage.mediastorage.data.repository.RepositoryImpl
-import com.hy0417sage.mediastorage.data.repository.remote.RemoteDataSource
-import com.hy0417sage.mediastorage.data.repository.remote.RemoteDataSourceImpl
+import com.hy0417sage.mediastorage.data.repository.search.remote.ImageRemoteDataSource
+import com.hy0417sage.mediastorage.data.repository.search.remote.ImageRemoteDataSourceImpl
+import com.hy0417sage.mediastorage.data.repository.search.remote.VClipRemoteDataSource
+import com.hy0417sage.mediastorage.data.repository.search.remote.VClipRemoteDataSourceImpl
 import com.hy0417sage.mediastorage.domain.repository.Repository
 import dagger.Module
 import dagger.Provides
@@ -22,17 +24,26 @@ class KakaoDIModule {
 
     @Singleton
     @Provides
-    fun provideDataSource(
+    fun provideImageDataSource(
         kakaoAPI: KakaoAPI,
-    ): RemoteDataSource {
-        return RemoteDataSourceImpl(kakaoAPI)
+    ): ImageRemoteDataSource {
+        return ImageRemoteDataSourceImpl(kakaoAPI)
+    }
+
+    @Singleton
+    @Provides
+    fun provideVClipDataSource(
+        kakaoAPI: KakaoAPI,
+    ): VClipRemoteDataSource {
+        return VClipRemoteDataSourceImpl(kakaoAPI)
     }
 
     @Singleton
     @Provides
     fun provideRepository(
-        remoteDataSource: RemoteDataSource,
+        imageRemoteDataSource: ImageRemoteDataSource,
+        vClipRemoteDataSource: VClipRemoteDataSource,
     ): Repository {
-        return RepositoryImpl(remoteDataSource)
+        return RepositoryImpl(imageRemoteDataSource, vClipRemoteDataSource)
     }
 }

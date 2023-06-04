@@ -1,4 +1,8 @@
-package com.hy0417sage.mediastorage.data.model
+package com.hy0417sage.mediastorage.data.model.search
+
+/**
+ * api return 값의 형태
+ */
 
 data class ResultSearchImage(
     val meta: ImageMeta,

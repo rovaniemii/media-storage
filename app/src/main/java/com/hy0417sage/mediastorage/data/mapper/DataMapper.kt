@@ -1,7 +1,7 @@
 package com.hy0417sage.mediastorage.data.mapper
 
-import com.hy0417sage.mediastorage.data.model.ImageDocuments
-import com.hy0417sage.mediastorage.data.model.VClipDocuments
+import com.hy0417sage.mediastorage.data.model.search.ImageDocuments
+import com.hy0417sage.mediastorage.data.model.search.VClipDocuments
 import com.hy0417sage.mediastorage.domain.model.ViewData
 
 fun totalMapper(totalData: List<ViewData>) = totalData.sortedByDescending { it.datetime }

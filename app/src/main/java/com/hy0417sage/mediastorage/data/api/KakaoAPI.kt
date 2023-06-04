@@ -1,7 +1,7 @@
 package com.hy0417sage.mediastorage.data.api
 
-import com.hy0417sage.mediastorage.data.model.ResultSearchImage
-import com.hy0417sage.mediastorage.data.model.ResultSearchVClip
+import com.hy0417sage.mediastorage.data.model.search.ResultSearchImage
+import com.hy0417sage.mediastorage.data.model.search.ResultSearchVClip
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
