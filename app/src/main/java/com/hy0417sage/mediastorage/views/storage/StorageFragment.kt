@@ -1,35 +1,20 @@
 package com.hy0417sage.mediastorage.views.storage
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hy0417sage.mediastorage.base.BaseFragment
 import com.hy0417sage.mediastorage.databinding.FragmentStorageBinding
-import com.hy0417sage.mediastorage.databinding.FragmentStorageBinding.inflate
 import com.hy0417sage.mediastorage.views.SharedViewModel
-import com.hy0417sage.mediastorage.views.adapter.StorageAdapter
 
 /*
 * 두 번째 fragment : 내 보관함
  */
-class StorageFragment : Fragment() {
-    private var _binding: FragmentStorageBinding? = null
-    val binding: FragmentStorageBinding get() = _binding!!
+class StorageFragment : BaseFragment<FragmentStorageBinding>(FragmentStorageBinding::inflate) {
 
     private val viewModel: SharedViewModel by activityViewModels()
     private val storageAdapter: StorageAdapter = StorageAdapter()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

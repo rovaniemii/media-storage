@@ -8,30 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hy0417sage.mediastorage.base.BaseFragment
 import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding
 import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding.inflate
 import com.hy0417sage.mediastorage.views.SharedViewModel
-import com.hy0417sage.mediastorage.views.adapter.SearchAdapter
 
 /*
 * 첫 번째 fragment : 검색 결과 화면
 * */
-class SearchFragment : Fragment() {
-
-    private var _binding: FragmentSearchBinding? = null
-    val binding: FragmentSearchBinding get() = _binding!!
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val viewModel: SharedViewModel by activityViewModels()
     private val searchAdapter: SearchAdapter = SearchAdapter()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

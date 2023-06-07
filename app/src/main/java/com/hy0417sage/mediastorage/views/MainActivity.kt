@@ -1,27 +1,23 @@
 package com.hy0417sage.mediastorage.views
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hy0417sage.mediastorage.R
+import com.hy0417sage.mediastorage.base.BaseActivity
 import com.hy0417sage.mediastorage.databinding.ActivityMainBinding
-import com.hy0417sage.mediastorage.databinding.ActivityMainBinding.inflate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>(
+    { ActivityMainBinding.inflate(it) }
+) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = inflate(layoutInflater)
-        setContentView(binding.root)
-
         initNav()
     }
 
