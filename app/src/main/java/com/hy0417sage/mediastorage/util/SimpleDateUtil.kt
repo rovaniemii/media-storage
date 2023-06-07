@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
-object DateUtil {
+object SimpleDateUtil {
     @SuppressLint("SimpleDateFormat")
     fun dateAndTime(): String {
         val now = System.currentTimeMillis()
