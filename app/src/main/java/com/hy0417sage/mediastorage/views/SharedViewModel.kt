@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.hy0417sage.domain.model.ViewData
 import com.hy0417sage.domain.usecase.GetUseCase
 import com.hy0417sage.mediastorage.ApplicationClass.Companion.sharedPreference
-import com.hy0417sage.mediastorage.util.DateUtil
+import com.hy0417sage.mediastorage.util.SimpleDateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -64,7 +64,7 @@ class SharedViewModel @Inject constructor(
     fun updateStorage(searchData: ViewData) {
         if (sharedPreference.getValue(searchData.thumbnail) == null) {
             sharedPreference.setValue(searchData.thumbnail,
-                searchData.copy(like = true, saveTime = DateUtil.dateAndTime()))
+                searchData.copy(like = true, saveTime = SimpleDateUtil.dateAndTime()))
             changeData(searchData, true)
         } else {
             sharedPreference.deleteValue(searchData.thumbnail)

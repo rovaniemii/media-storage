@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views.adapter.shared
+package com.hy0417sage.mediastorage.base.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

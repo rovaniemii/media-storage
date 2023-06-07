@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views.adapter.shared
+package com.hy0417sage.mediastorage.base.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.hy0417sage.domain.model.ViewData

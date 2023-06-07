@@ -1,9 +1,9 @@
-package com.hy0417sage.mediastorage.views.adapter
+package com.hy0417sage.mediastorage.views.search
 
 import androidx.recyclerview.widget.RecyclerView
 import com.hy0417sage.domain.model.ViewData
-import com.hy0417sage.mediastorage.views.adapter.shared.SharedAdapter
-import com.hy0417sage.mediastorage.views.adapter.shared.SharedViewHolder
+import com.hy0417sage.mediastorage.base.adapter.SharedAdapter
+import com.hy0417sage.mediastorage.base.adapter.SharedViewHolder
 
 class SearchAdapter : SharedAdapter() {
 
