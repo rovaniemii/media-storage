@@ -20,15 +20,15 @@ class SharedViewModel @Inject constructor(
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: MutableLiveData<String> get() = _errorMessage
 
-    private val _searchDataList = MutableLiveData<List<SearchItem>>(arrayListOf())
-    val searchDataList: LiveData<List<SearchItem>> get() = _searchDataList
-    private val _storageDataList = MutableLiveData<List<SearchItem>?>()
-    val storageDataList: MutableLiveData<List<SearchItem>?> get() = _storageDataList
+    private val _searchItem = MutableLiveData<List<SearchItem>>(arrayListOf())
+    val searchItem: LiveData<List<SearchItem>> get() = _searchItem
+    private val _bookmarksList = MutableLiveData<List<SearchItem>?>()
+    val bookmarksList: MutableLiveData<List<SearchItem>?> get() = _bookmarksList
 
     var keyWord: String = ""
     var callPage: Int = 1
 
-    fun thumbnailSearch(subject: String, page: Int = callPage) {
+    fun searchItem(subject: String, page: Int = callPage) {
         viewModelScope.launch {
             val quotes = searchImageUseCase.invoke(subject, page)
             if (quotes.isNotEmpty()) {
@@ -40,15 +40,15 @@ class SharedViewModel @Inject constructor(
                     }
                 }
                 if (page == 1) {
-                    _searchDataList.value = search
+                    _searchItem.value = search
                 } else {
-                    val view = _searchDataList.value?.toMutableList() ?: mutableListOf()
-                    _searchDataList.value = (view + search).sortedByDescending { it.datetime }
+                    val view = _searchItem.value?.toMutableList() ?: mutableListOf()
+                    _searchItem.value = (view + search).sortedByDescending { it.datetime }
                 }
                 callPage++
             }else{
                 if (page == 1){
-                    _searchDataList.value = arrayListOf()
+                    _searchItem.value = arrayListOf()
                     _errorMessage.value = "결과가 없습니다."
                 }
             }
@@ -56,30 +56,30 @@ class SharedViewModel @Inject constructor(
     }
 
     //화면 첫 실행시 sharedPreference에 저장되어진 데이터를 저장된 순으로 정렬해 storageDataList를 업데이트 해줍니다.
-    fun setStorageDataList() {
-        _storageDataList.value = sharedPreference.getAllValue().sortedBy { it.bookmarkTime }
+    fun setBookmarks() {
+        _bookmarksList.value = sharedPreference.getAllValue().sortedBy { it.bookmarkTime }
     }
 
     //좋아요 데이터가 변화 되었다면, sharedPreference 에 이를 반영합니다.
-    fun updateStorage(searchData: SearchItem) {
+    fun updateBookmarks(searchData: SearchItem) {
         if (sharedPreference.getValue(searchData.imageUrl) == null) {
             sharedPreference.setValue(searchData.imageUrl,
                 searchData.copy(bookmark = true, bookmarkTime = SimpleDateUtil.dateAndTime()))
-            changeData(searchData, true)
+            changeBookMarks(searchData, true)
         } else {
             sharedPreference.deleteValue(searchData.imageUrl)
-            changeData(searchData, false)
+            changeBookMarks(searchData, false)
         }
     }
 
     //좋아요 데이터가 변화 되었다면, fragment 두 화면에서 구독중인 데이터 storageDataList, searchDataList 데이터를 업데이트해줍니다.
-    private fun changeData(searchItem: SearchItem, bookmark: Boolean) {
+    private fun changeBookMarks(searchItem: SearchItem, bookmark: Boolean) {
         val storage =
             sharedPreference.getAllValue().sortedBy { it.bookmarkTime }.toMutableList()
-        _storageDataList.value = storage
-        val search = _searchDataList.value?.toMutableList() ?: mutableListOf()
+        _bookmarksList.value = storage
+        val search = _searchItem.value?.toMutableList() ?: mutableListOf()
         val index = search.indexOf(searchItem)
         search[index] = search[index].copy(bookmark = bookmark)
-        _searchDataList.value = search
+        _searchItem.value = search
     }
 }
