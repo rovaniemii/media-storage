@@ -1,7 +1,7 @@
 package com.hy0417sage.mediastorage.views.search
 
 import androidx.recyclerview.widget.RecyclerView
-import com.hy0417sage.domain.model.ViewData
+import com.hy0417sage.core.model.SearchItem
 import com.hy0417sage.mediastorage.base.adapter.SharedAdapter
 import com.hy0417sage.mediastorage.base.adapter.SharedViewHolder
 
@@ -14,16 +14,16 @@ class SearchAdapter : SharedAdapter() {
         position: Int,
     ) {
         if (holder is SharedViewHolder) {
-            val viewData = getItem(position) as ViewData
-            holder.bind(viewData)
+            val searchItem = getItem(position) as SearchItem
+            holder.bind(searchItem)
             holder.itemView.setOnClickListener {
-                onItemClickListener.onClick(viewData)
+                onItemClickListener.onClick(searchItem)
             }
         }
     }
 
     fun interface OnItemClickListener {
-        fun onClick(viewData: ViewData)
+        fun onClick(viewData: SearchItem)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {

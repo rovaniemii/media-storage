@@ -1,10 +1,8 @@
 package com.hy0417sage.mediastorage.di
 
-import com.hy0417sage.data.api.KakaoAPI
-import com.hy0417sage.data.repository.remote.ImageRemoteDataSource
-import com.hy0417sage.data.repository.remote.ImageRemoteDataSourceImpl
-import com.hy0417sage.data.repository.remote.VClipRemoteDataSource
-import com.hy0417sage.data.repository.remote.VClipRemoteDataSourceImpl
+import com.hy0417sage.data.remote.service.SearchService
+import com.hy0417sage.data.repository.datasource.RemoteDataSource
+import com.hy0417sage.data.repository.datasource.RemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,16 +16,8 @@ class DataModule {
     @Singleton
     @Provides
     fun provideImageDataSource(
-        kakaoAPI: KakaoAPI,
-    ): ImageRemoteDataSource {
-        return ImageRemoteDataSourceImpl(kakaoAPI)
-    }
-
-    @Singleton
-    @Provides
-    fun provideVClipDataSource(
-        kakaoAPI: KakaoAPI,
-    ): VClipRemoteDataSource {
-        return VClipRemoteDataSourceImpl(kakaoAPI)
+        searchService: SearchService,
+    ): RemoteDataSource {
+        return RemoteDataSourceImpl(searchService)
     }
 }

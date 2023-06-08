@@ -3,21 +3,20 @@ package com.hy0417sage.mediastorage.base.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.hy0417sage.domain.model.ViewData
+import com.hy0417sage.core.model.SearchItem
 import com.hy0417sage.mediastorage.databinding.LayoutViewHolderBinding
 
 class SharedViewHolder(
     private val binding: LayoutViewHolderBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(viewData: ViewData) {
+    fun bind(searchItem: SearchItem) {
         with(binding) {
             date.text =
-                "${viewData.datetime.split('T')[0]} ${viewData.datetime.split('T')[1].split('.')[0]}"
-            keyWord.text = viewData.source
+                "${searchItem.datetime.split('T')[0]} ${searchItem.datetime.split('T')[1].split('.')[0]}"
             Glide.with(binding.root)
-                .load(viewData.thumbnail)
+                .load(searchItem.imageUrl)
                 .into(imageView)
-            if (viewData.like) {
+            if (searchItem.bookmark) {
                 likeView.visibility = View.VISIBLE
             } else {
                 likeView.visibility = View.GONE

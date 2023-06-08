@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hy0417sage.domain.model.ViewData
+import com.hy0417sage.core.model.SearchItem
 import com.hy0417sage.mediastorage.databinding.LayoutViewHolderBinding
 
-abstract class SharedAdapter : ListAdapter<ViewData, RecyclerView.ViewHolder>(SharedDiffUtil()) {
+abstract class SharedAdapter : ListAdapter<SearchItem, RecyclerView.ViewHolder>(SharedDiffUtil()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,8 +27,8 @@ abstract class SharedAdapter : ListAdapter<ViewData, RecyclerView.ViewHolder>(Sh
         position: Int,
     ) {
         if (holder is SharedViewHolder) {
-            val viewData = getItem(position) as ViewData
-            holder.bind(viewData)
+            val searchItem = getItem(position) as SearchItem
+            holder.bind(searchItem)
         }
     }
 }

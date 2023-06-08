@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.hy0417sage.mediastorage"
-        minSdk 28
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -42,6 +42,7 @@ android {
 
 dependencies {
 
+    implementation project(':core')
     implementation project(':data')
     implementation project(':domain')
 

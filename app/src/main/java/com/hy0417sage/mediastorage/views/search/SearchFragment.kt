@@ -1,16 +1,12 @@
 package com.hy0417sage.mediastorage.views.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hy0417sage.mediastorage.base.BaseFragment
 import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding
-import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding.inflate
 import com.hy0417sage.mediastorage.views.SharedViewModel
 
 /*

@@ -1,9 +1,8 @@
 package com.hy0417sage.mediastorage.di
 
-import com.hy0417sage.data.repository.RepositoryImpl
-import com.hy0417sage.data.repository.remote.ImageRemoteDataSource
-import com.hy0417sage.data.repository.remote.VClipRemoteDataSource
-import com.hy0417sage.domain.repository.Repository
+import com.hy0417sage.data.repository.SearchRepositoryImpl
+import com.hy0417sage.data.repository.datasource.RemoteDataSource
+import com.hy0417sage.domain.repository.SearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,9 +16,8 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideRepository(
-        imageRemoteDataSource: ImageRemoteDataSource,
-        vClipRemoteDataSource: VClipRemoteDataSource,
-    ): Repository {
-        return RepositoryImpl(imageRemoteDataSource, vClipRemoteDataSource)
+        remoteDataSource: RemoteDataSource,
+    ): SearchRepository {
+        return SearchRepositoryImpl(remoteDataSource)
     }
 }

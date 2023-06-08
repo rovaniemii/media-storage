@@ -1,12 +1,12 @@
-package com.hy0417sage.data.api
+package com.hy0417sage.data.remote.service
 
-import com.hy0417sage.data.model.ResultSearchImage
-import com.hy0417sage.data.model.ResultSearchVClip
+import com.hy0417sage.data.remote.model.ResultSearchImage
+import com.hy0417sage.data.remote.model.ResultSearchVClip
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
-interface KakaoAPI {
+interface SearchService {
 
     @GET("/v2/search/image?")
     suspend fun getSearchImage(
@@ -25,5 +25,4 @@ interface KakaoAPI {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): ResultSearchVClip
-
 }

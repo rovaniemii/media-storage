@@ -24,10 +24,6 @@
 - SharedPreferences
 
 ## ◼️ Features
-| | | |
-|---|---|---|
-|<img src="https://user-images.githubusercontent.com/97173983/216802940-23d962e3-4d50-4c1e-b917-c4a9ff8ac909.gif" width="250">|<img src="https://user-images.githubusercontent.com/97173983/216802922-c3023c5d-2eee-4d50-aab4-3eb70b6edb22.gif" width="250">|<img src="https://user-images.githubusercontent.com/97173983/216802953-e6315f59-7715-4b9a-b947-54b2b96a6b80.gif" width="250">|
-| | | |
 
 - 검색은 키워드 하나에 이미지 검색과 동영상 검색을 동시에 사용, 두 검색 결과를 합친 리스트를 사용합니다. 
 - UI는 fragment 2개를 사용했습니다.

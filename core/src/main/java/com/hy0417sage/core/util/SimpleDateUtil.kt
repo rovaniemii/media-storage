@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.util
+package com.hy0417sage.core.util
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat

@@ -1,14 +1,14 @@
-package com.hy0417sage.data.api
+package com.hy0417sage.data.remote.service
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object KakaoClientImpl : KakaoClient {
+object SearchClient {
     private const val BASE_URL = "https://dapi.kakao.com/"
 
-    override fun create(): KakaoAPI {
+    fun create(): SearchService {
         val logger =
             HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
@@ -21,6 +21,6 @@ object KakaoClientImpl : KakaoClient {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(KakaoAPI::class.java)
+            .create(SearchService::class.java)
     }
 }

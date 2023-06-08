@@ -1,4 +1,4 @@
-package com.hy0417sage.data.model
+package com.hy0417sage.data.remote.model
 
 /**
  * api return 값의 형태
