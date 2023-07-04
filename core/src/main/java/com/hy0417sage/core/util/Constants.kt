@@ -5,7 +5,6 @@ object Constants {
     const val RECENCY_PARAM = "recency"
     const val AUTH_HEADER = "KakaoAK a0f922e7fe4906b06e508e9eee4a4827"
 
-    const val SEARCH_STARTING_PAGE_INDEX = 10
     const val IMAGE_API_PAGE_MAX = 50
     const val IMAGE_API_SIZE_MAX = 80
     const val VIDEO_API_PAGE_MAX = 15

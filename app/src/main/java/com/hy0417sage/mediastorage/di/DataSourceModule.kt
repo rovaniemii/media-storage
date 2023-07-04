@@ -1,5 +1,6 @@
 package com.hy0417sage.mediastorage.di
 
+import com.hy0417sage.data.remote.model.ApiMapper
 import com.hy0417sage.data.remote.service.SearchService
 import com.hy0417sage.data.repository.datasource.RemoteDataSource
 import com.hy0417sage.data.repository.datasource.RemoteDataSourceImpl
@@ -11,13 +12,14 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DataModule {
+object DataSourceModule {
 
     @Singleton
     @Provides
-    fun provideImageDataSource(
+    fun provideDataSource(
         searchService: SearchService,
+        apiMapper: ApiMapper,
     ): RemoteDataSource {
-        return RemoteDataSourceImpl(searchService)
+        return RemoteDataSourceImpl(searchService, apiMapper)
     }
 }

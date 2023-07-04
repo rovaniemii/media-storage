@@ -3,13 +3,13 @@ package com.hy0417sage.data.remote.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.hy0417sage.core.model.SearchItem
-import com.hy0417sage.core.util.Constants.PAGE_SIZE
-import com.hy0417sage.core.util.Constants.SEARCH_STARTING_PAGE_INDEX
-import com.hy0417sage.data.remote.model.ApiPagingModel
+import com.hy0417sage.core.util.Constants
+import com.hy0417sage.data.remote.model.PagingModel
 
-//https://developer.android.com/codelabs/android-paging-basics?hl=ko#4
+private const val SEARCH_STARTING_PAGE_INDEX = 1
+
 class SearchItemPagingSource(
-    private val pagingData: ApiPagingModel,
+    private val pagingData: PagingModel
 ) : PagingSource<Int, SearchItem>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchItem> {
@@ -22,10 +22,11 @@ class SearchItemPagingSource(
                 data = pagingData,
                 page = page
             )
+
             LoadResult.Page(
                 data = chunkedList,
                 prevKey = if (page == SEARCH_STARTING_PAGE_INDEX) null else page - 1,
-                nextKey = if (page == (pagingData.searchItemList.size / PAGE_SIZE) + 1) null else page + 1
+                nextKey = if (page == calculateTotalPage(pagingData.searchItemList.size)) null else page + 1
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)
@@ -39,8 +40,20 @@ class SearchItemPagingSource(
         }
     }
 
-    private fun fetchImagesByPage(data: ApiPagingModel, page: Int): List<SearchItem> {
-        val chunkedList = data.searchItemList.chunked(PAGE_SIZE)
+    /**
+     * [data]안의 searchItemList 를 전체 페이지 수로 나누어 [page]에 해당하는 List<SearchItem>을 리턴하는 함수입니다.
+     * @return chunked로 나눠진 리스트중 요청한 페이지에 대한 List<SearchItem>
+     */
+    private fun fetchImagesByPage(data: PagingModel, page: Int): List<SearchItem> {
+        val chunkedList = data.searchItemList.chunked(Constants.PAGE_SIZE)
         return chunkedList[page - 1]
+    }
+
+    /**
+     * [listSize]와 한 페이지에 담긴 SearchItem 의 개수를 바탕으로 전체 페이지 수를 계산하는 함수입니다.
+     * @return 전체 페이지 수(Int)
+     */
+    private fun calculateTotalPage(listSize: Int) : Int {
+        return (listSize / Constants.PAGE_SIZE) + 1
     }
 }

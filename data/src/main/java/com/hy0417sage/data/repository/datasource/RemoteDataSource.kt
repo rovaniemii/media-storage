@@ -1,8 +1,8 @@
 package com.hy0417sage.data.repository.datasource
 
-import com.hy0417sage.data.remote.model.ResultSearchImage
-import com.hy0417sage.data.remote.model.ResultSearchVClip
-
+import androidx.paging.PagingData
+import com.hy0417sage.core.model.SearchItem
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Api 호출을 통해 Data 를 가져오기 위한 interface
@@ -10,18 +10,6 @@ import com.hy0417sage.data.remote.model.ResultSearchVClip
  */
 
 interface RemoteDataSource {
-
-    suspend fun getResultSearchImage(
-        apiKey: String,
-        keyWord: String,
-        page: Int,
-        size: Int = 10,
-    ): ResultSearchImage
-
-    suspend fun getResultSearchVClip(
-        apiKey: String,
-        keyWord: String,
-        page: Int,
-        size: Int = 10,
-    ): ResultSearchVClip
+    suspend fun firstSearchImages(query: String): Flow<PagingData<SearchItem>>
+    suspend fun searchImages(query: String): Flow<PagingData<SearchItem>>
 }

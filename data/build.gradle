@@ -32,11 +32,6 @@ android {
 
 dependencies {
 
-    def retrofit_version = "2.9.0"
-    def okhttp_version = "4.10.0"
-    def hilt_version = "2.44"
-    def paging_version = "3.1.1"
-
     // multiModule
     implementation project(":core")
     implementation project(":domain")
@@ -49,17 +44,25 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
 
     //Retrofit
+    def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //OkHttp
+    def okhttp_version = "4.10.0"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     //Hilt
+    def hilt_version = "2.44"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     //Paging
+    def paging_version = "3.1.1"
     implementation "androidx.paging:paging-runtime:$paging_version"
+
+    // moshi
+    def moshi_version = "1.9.3"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
 }

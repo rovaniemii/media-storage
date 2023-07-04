@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.base
+package com.hy0417sage.core.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

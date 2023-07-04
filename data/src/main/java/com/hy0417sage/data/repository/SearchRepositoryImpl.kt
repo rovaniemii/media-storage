@@ -1,12 +1,10 @@
 package com.hy0417sage.data.repository
 
+import androidx.paging.PagingData
 import com.hy0417sage.core.model.SearchItem
-import com.hy0417sage.core.util.Constants.AUTH_HEADER
 import com.hy0417sage.data.repository.datasource.RemoteDataSource
-import com.hy0417sage.data.remote.mapper.imageMapper
-import com.hy0417sage.data.remote.mapper.totalMapper
-import com.hy0417sage.data.remote.mapper.vClipMapper
 import com.hy0417sage.domain.repository.SearchRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -19,21 +17,11 @@ import javax.inject.Inject
 class SearchRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
 ) : SearchRepository {
+    override suspend fun firstSearchImages(query: String): Flow<PagingData<SearchItem>> {
+        return remoteDataSource.firstSearchImages(query)
+    }
 
-    override suspend fun getSearchImage(query: String, page: Int): List<SearchItem> {
-        val data = kotlin.runCatching {
-            totalMapper(
-                imageMapper(
-                    remoteDataSource.getResultSearchImage(
-                        AUTH_HEADER,
-                        query,
-                        page).documents)
-                        + vClipMapper(
-                    remoteDataSource.getResultSearchVClip(
-                        AUTH_HEADER,
-                        query,
-                        page).documents))
-        }.getOrDefault(listOf())
-        return data
+    override suspend fun searchImages(query: String): Flow<PagingData<SearchItem>> {
+        return remoteDataSource.searchImages(query)
     }
 }

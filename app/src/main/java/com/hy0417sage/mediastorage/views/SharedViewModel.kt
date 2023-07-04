@@ -1,85 +1,76 @@
 package com.hy0417sage.mediastorage.views
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.hy0417sage.core.data.SearchUiState
 import com.hy0417sage.core.model.SearchItem
-import com.hy0417sage.domain.usecase.SearchImageUseCase
-import com.hy0417sage.mediastorage.ApplicationClass.Companion.sharedPreference
-import com.hy0417sage.core.util.SimpleDateUtil
+import com.hy0417sage.core.ui.BaseViewModel
+import com.hy0417sage.core.util.Event
+import com.hy0417sage.domain.usecase.FirstSearchImagesUseCase
+import com.hy0417sage.domain.usecase.SearchImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(
-    private val searchImageUseCase: SearchImageUseCase,
-) : ViewModel() {
+    private val searchImagesUseCase: SearchImagesUseCase,
+    private val firstSearchImagesUseCase: FirstSearchImagesUseCase,
+) : BaseViewModel() {
 
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: MutableLiveData<String> get() = _errorMessage
+    // 상태(State)는 StateFlow, 이벤트(Event)는 SharedFlow
+    // 출처: https://myungpyo.medium.com/stateflow-%EC%99%80-sharedflow-32fdb49f9a32
+    private val _uiState = MutableStateFlow(SearchUiState())
+    val uiState = _uiState.asStateFlow()
 
-    private val _searchItem = MutableLiveData<List<SearchItem>>(arrayListOf())
-    val searchItem: LiveData<List<SearchItem>> get() = _searchItem
-    private val _bookmarksList = MutableLiveData<List<SearchItem>?>()
-    val bookmarksList: MutableLiveData<List<SearchItem>?> get() = _bookmarksList
+    private val _firstPagingData = MutableSharedFlow<PagingData<SearchItem>>()
+    val firstPagingData = _firstPagingData.asSharedFlow()
 
-    var keyWord: String = ""
-    var callPage: Int = 1
+    private val _pagingData = MutableSharedFlow<PagingData<SearchItem>>()
+    val pagingData = _pagingData.asSharedFlow()
 
-    fun searchItem(subject: String, page: Int = callPage) {
-        viewModelScope.launch {
-            val quotes = searchImageUseCase.invoke(subject, page)
-            if (quotes.isNotEmpty()) {
-                _errorMessage.value = ""
-                val search = quotes.toMutableList()
-                for (i in 0 until search.size) {
-                    if (sharedPreference.getValue(search[i].imageUrl) != null) {
-                        search[i] = search[i].copy(bookmark = true)
-                    }
-                }
-                if (page == 1) {
-                    _searchItem.value = search
-                } else {
-                    val view = _searchItem.value?.toMutableList() ?: mutableListOf()
-                    _searchItem.value = (view + search).sortedByDescending { it.datetime }
-                }
-                callPage++
-            }else{
-                if (page == 1){
-                    _searchItem.value = arrayListOf()
-                    _errorMessage.value = "결과가 없습니다."
-                }
+    private val _imageUrl = MutableSharedFlow<Event<String>>()
+    val imageUrl = _imageUrl.asSharedFlow()
+
+    /* 기존 구현에서 데이터를 다 불러오고 시간순으로 정렬하면 로딩 시간이 길어지는 문제가 있었습니다.
+       SearchItemAdapter의 DiffUtil 함수가 있기 때문에 일부만 데이터를 불러오고, 유저가 앱을 사용하는 동안
+       비동기로 데이터들을 불러오고 자연스럽게 갱신하는것 까지 구현이 가능했습니다. */
+
+    /* 일단 첫번째 페이지만 불러오는 함수 */
+    fun firstSearchImages(query: String) = viewModelScope.launch {
+        _uiState.update { it.copy(isGuideMessageVisible = false) }
+        _uiState.update { it.copy(isLoading = true) }
+        _uiState.update { it.copy(currentQuery = query) }
+        firstSearchImagesUseCase.invoke(
+            query = query
+        )
+            .cachedIn(viewModelScope).collect {
+                _firstPagingData.emit(it)
             }
+    }
+
+    /* 앞서 불러온 첫번째 페이지가 유저에게 보여질 동안 전체 이미지를 불러오는 함수 */
+    fun searchImages() = viewModelScope.launch {
+        searchImagesUseCase.invoke(
+            query = _uiState.value.currentQuery
+        )
+            .cachedIn(viewModelScope).collect {
+                _pagingData.emit(it)
+            }
+    }
+
+    fun setProgressBar(isVisible: Boolean){
+        if(isVisible){
+            _uiState.update { it.copy(isLoading = true) }
+        }else{
+            _uiState.update { it.copy(isLoading = false) }
         }
     }
 
-    //화면 첫 실행시 sharedPreference에 저장되어진 데이터를 저장된 순으로 정렬해 storageDataList를 업데이트 해줍니다.
-    fun setBookmarks() {
-        _bookmarksList.value = sharedPreference.getAllValue().sortedBy { it.bookmarkTime }
-    }
-
-    //좋아요 데이터가 변화 되었다면, sharedPreference 에 이를 반영합니다.
-    fun updateBookmarks(searchData: SearchItem) {
-        if (sharedPreference.getValue(searchData.imageUrl) == null) {
-            sharedPreference.setValue(searchData.imageUrl,
-                searchData.copy(bookmark = true, bookmarkTime = SimpleDateUtil.dateAndTime()))
-            changeBookMarks(searchData, true)
-        } else {
-            sharedPreference.deleteValue(searchData.imageUrl)
-            changeBookMarks(searchData, false)
-        }
-    }
-
-    //좋아요 데이터가 변화 되었다면, fragment 두 화면에서 구독중인 데이터 storageDataList, searchDataList 데이터를 업데이트해줍니다.
-    private fun changeBookMarks(searchItem: SearchItem, bookmark: Boolean) {
-        val storage =
-            sharedPreference.getAllValue().sortedBy { it.bookmarkTime }.toMutableList()
-        _bookmarksList.value = storage
-        val search = _searchItem.value?.toMutableList() ?: mutableListOf()
-        val index = search.indexOf(searchItem)
-        search[index] = search[index].copy(bookmark = bookmark)
-        _searchItem.value = search
+    fun removeImage(imageUrl: String) = viewModelScope.launch {
+        _imageUrl.emit(Event(imageUrl))
     }
 }
