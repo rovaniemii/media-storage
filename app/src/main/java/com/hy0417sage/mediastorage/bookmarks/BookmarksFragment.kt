@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views.bookmarks
+package com.hy0417sage.mediastorage.bookmarks
 
 import android.os.Bundle
 import android.view.View
@@ -9,7 +9,7 @@ import com.hy0417sage.core.util.Constants
 import com.hy0417sage.core.util.getImageList
 import com.hy0417sage.core.util.removeImageFromList
 import com.hy0417sage.mediastorage.databinding.FragmentBookmarksBinding
-import com.hy0417sage.mediastorage.views.SharedViewModel
+import com.hy0417sage.mediastorage.main.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /*

@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views.search
+package com.hy0417sage.mediastorage.search
 
 import android.view.LayoutInflater
 import android.view.View

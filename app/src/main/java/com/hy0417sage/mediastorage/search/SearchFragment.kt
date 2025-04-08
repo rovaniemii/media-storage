@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views.search
+package com.hy0417sage.mediastorage.search
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,7 @@ import com.hy0417sage.core.util.addImageToList
 import com.hy0417sage.core.util.removeImageFromList
 import com.hy0417sage.mediastorage.R
 import com.hy0417sage.mediastorage.databinding.FragmentSearchBinding
-import com.hy0417sage.mediastorage.views.SharedViewModel
+import com.hy0417sage.mediastorage.main.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

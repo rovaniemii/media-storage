@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views
+package com.hy0417sage.mediastorage.main
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -10,7 +10,11 @@ import com.hy0417sage.core.util.Event
 import com.hy0417sage.domain.usecase.FirstSearchImagesUseCase
 import com.hy0417sage.domain.usecase.SearchImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -61,10 +65,10 @@ class SharedViewModel @Inject constructor(
             }
     }
 
-    fun setProgressBar(isVisible: Boolean){
-        if(isVisible){
+    fun setProgressBar(isVisible: Boolean) {
+        if (isVisible) {
             _uiState.update { it.copy(isLoading = true) }
-        }else{
+        } else {
             _uiState.update { it.copy(isLoading = false) }
         }
     }

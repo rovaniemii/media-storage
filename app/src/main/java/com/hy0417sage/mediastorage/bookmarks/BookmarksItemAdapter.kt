@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views.bookmarks
+package com.hy0417sage.mediastorage.bookmarks
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,7 +18,6 @@ class BookmarksItemAdapter(
         private val adapter: BookmarksItemAdapter
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SearchItem) {
-
             Glide
                 .with(binding.root.context)
                 .load(item.imageUrl)
@@ -46,10 +45,10 @@ class BookmarksItemAdapter(
         holder.bind(currentList[position])
     }
 
-    fun removeItem(imageUrl: String) : Boolean {
+    fun removeItem(imageUrl: String): Boolean {
         val newList = currentList.toMutableList()
         newList.forEachIndexed { index, item ->
-            if(item.imageUrl == imageUrl){
+            if (item.imageUrl == imageUrl) {
                 newList.removeAt(index)
                 submitList(newList)
                 return true
