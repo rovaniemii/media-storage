@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views
+package com.hy0417sage.mediastorage
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData

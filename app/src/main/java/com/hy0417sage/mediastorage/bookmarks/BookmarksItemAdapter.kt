@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.views.bookmarks
+package com.hy0417sage.mediastorage.bookmarks
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
