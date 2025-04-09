@@ -55,4 +55,7 @@ dependencies {
     // Hilt
     kapt(libs.hilt.compiler)
     implementation(libs.bundles.hilt)
+
+    // Room
+    implementation(libs.bundles.room)
 }

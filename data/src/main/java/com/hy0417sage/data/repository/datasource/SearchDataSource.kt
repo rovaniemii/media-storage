@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
  * Image, VClip - DataSourceImpl 에서 구현된다.
  */
 
-interface RemoteDataSource {
+interface SearchDataSource {
     suspend fun firstSearchImages(query: String): Flow<PagingData<SearchItem>>
     suspend fun searchImages(query: String): Flow<PagingData<SearchItem>>
 }

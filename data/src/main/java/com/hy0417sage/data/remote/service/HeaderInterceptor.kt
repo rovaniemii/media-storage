@@ -1,6 +1,6 @@
 package com.hy0417sage.data.remote.service
 
-import com.hy0417sage.core.util.Constants.AUTH_HEADER
+import com.hy0417sage.core.util.Constants.REST_API_AUTH_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
 /**
@@ -11,7 +11,7 @@ class HeaderInterceptor : Interceptor {
         proceed(
             request()
                 .newBuilder()
-                .addHeader("Authorization", AUTH_HEADER)
+                .addHeader("Authorization", REST_API_AUTH_KEY)
                 .build()
         )
     }

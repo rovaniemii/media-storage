@@ -40,6 +40,10 @@ okhttp = "4.12.0"
 # Paging3
 paging = "3.3.6"
 
+# Room
+room = "2.6.1"
+coroutines = "1.9.0"
+
 # Test
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -101,6 +105,12 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
 paging-common-ktx = { module = "androidx.paging:paging-common-ktx", version.ref = "paging" }
 paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+
+# Room
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
 # Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -165,6 +175,13 @@ paging = [
     "paging-runtime-ktx",
     "paging-common-ktx",
     "paging-compose",
+]
+
+room = [
+    "room-runtime",
+    "room-compiler",
+    "room-ktx",
+    "coroutines-core",
 ]
 
 [plugins]

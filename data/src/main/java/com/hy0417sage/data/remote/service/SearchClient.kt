@@ -9,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object SearchClient {
     fun create(): SearchService {
-
         val client = OkHttpClient.Builder().apply {
             retryOnConnectionFailure(true) /* 연결에 문제 발생시 재시도 */
             addInterceptor(HeaderInterceptor()) /* 인증키 초기 세팅 */
@@ -17,7 +16,7 @@ object SearchClient {
                 if (BuildConfig.DEBUG) {
                     level = HttpLoggingInterceptor.Level.BODY
                 }
-            }) /* 디버그 상태에서 http 통신 로깅 */
+            })
 
         }.build()
 

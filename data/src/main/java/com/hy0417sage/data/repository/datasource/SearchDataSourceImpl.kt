@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hy0417sage.core.model.SearchItem
 import com.hy0417sage.core.util.Constants
-import com.hy0417sage.data.remote.model.ApiMapper
+import com.hy0417sage.data.remote.mapper.ApiMapper
 import com.hy0417sage.data.remote.model.PagingModel
 import com.hy0417sage.data.remote.paging.SearchItemPagingSource
 import com.hy0417sage.data.remote.service.SearchService
@@ -17,10 +17,10 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class RemoteDataSourceImpl @Inject constructor(
+class SearchDataSourceImpl @Inject constructor(
     private val service: SearchService,
     private val apiMapper: ApiMapper,
-) : RemoteDataSource {
+) : SearchDataSource {
     /**
      * [query]를 바탕으로 첫번째 페이징 데이터를 생성하는 함수입니다.
      * @return FirstSearchImagesUseCase에서 사용할 Flow<PagingData<SearchItem>>
@@ -142,7 +142,8 @@ class RemoteDataSourceImpl @Inject constructor(
                             sort = Constants.RECENCY_PARAM,
                             query = query,
                             page = imagePage,
-                            size = Constants.IMAGE_API_SIZE_MAX)
+                            size = Constants.IMAGE_API_SIZE_MAX
+                        )
                         for (item in imageResponse.documents.map { apiMapper.imageToSearchItem(it) }) {
                             imageList.add(item)
                         }
@@ -162,7 +163,8 @@ class RemoteDataSourceImpl @Inject constructor(
                             sort = Constants.RECENCY_PARAM,
                             query = query,
                             page = videoPage,
-                            size = Constants.VIDEO_API_SIZE_MAX)
+                            size = Constants.VIDEO_API_SIZE_MAX
+                        )
                         for (item in videoResponse.documents.map { apiMapper.videoToSearchItem(it) }) {
                             videoList.add(item)
                         }
