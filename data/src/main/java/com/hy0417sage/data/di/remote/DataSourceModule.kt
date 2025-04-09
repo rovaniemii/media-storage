@@ -1,9 +1,9 @@
-package com.hy0417sage.mediastorage.di
+package com.hy0417sage.data.di.remote
 
-import com.hy0417sage.data.remote.model.ApiMapper
+import com.hy0417sage.data.remote.mapper.ApiMapper
 import com.hy0417sage.data.remote.service.SearchService
-import com.hy0417sage.data.repository.datasource.RemoteDataSource
-import com.hy0417sage.data.repository.datasource.RemoteDataSourceImpl
+import com.hy0417sage.data.repository.datasource.SearchDataSource
+import com.hy0417sage.data.repository.datasource.SearchDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ object DataSourceModule {
     fun provideDataSource(
         searchService: SearchService,
         apiMapper: ApiMapper,
-    ): RemoteDataSource {
-        return RemoteDataSourceImpl(searchService, apiMapper)
+    ): SearchDataSource {
+        return SearchDataSourceImpl(searchService, apiMapper)
     }
 }

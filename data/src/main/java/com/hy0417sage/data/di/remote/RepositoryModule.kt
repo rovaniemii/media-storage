@@ -1,7 +1,7 @@
-package com.hy0417sage.mediastorage.di
+package com.hy0417sage.data.di.remote
 
 import com.hy0417sage.data.repository.SearchRepositoryImpl
-import com.hy0417sage.data.repository.datasource.RemoteDataSource
+import com.hy0417sage.data.repository.datasource.SearchDataSource
 import com.hy0417sage.domain.repository.SearchRepository
 import dagger.Module
 import dagger.Provides
@@ -16,8 +16,8 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideRepository(
-        remoteDataSource: RemoteDataSource,
+        searchDataSource: SearchDataSource,
     ): SearchRepository {
-        return SearchRepositoryImpl(remoteDataSource)
+        return SearchRepositoryImpl(searchDataSource)
     }
 }

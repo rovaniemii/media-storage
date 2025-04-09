@@ -1,4 +1,4 @@
-package com.hy0417sage.mediastorage.di
+package com.hy0417sage.data.di.remote
 
 import com.hy0417sage.data.remote.service.SearchClient
 import com.hy0417sage.data.remote.service.SearchService

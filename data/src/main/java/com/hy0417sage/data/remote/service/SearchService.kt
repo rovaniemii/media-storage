@@ -1,7 +1,7 @@
 package com.hy0417sage.data.remote.service
 
-import com.hy0417sage.data.remote.model.ApiImagesResponse
-import com.hy0417sage.data.remote.model.ApiVideosResponse
+import com.hy0417sage.data.remote.model.ImagesDTO
+import com.hy0417sage.data.remote.model.VideoDTO
 import com.hy0417sage.core.data.BaseResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,7 +13,7 @@ interface SearchService {
         @Query("query") query : String,
         @Query("page") page : Int,
         @Query("size") size : Int,
-    ): BaseResponse<ApiImagesResponse>
+    ): BaseResponse<ImagesDTO>
 
     @GET("/v2/search/vclip")
     suspend fun searchVideos(
@@ -21,5 +21,5 @@ interface SearchService {
         @Query("query") query : String,
         @Query("page") page : Int,
         @Query("size") size : Int,
-    ): BaseResponse<ApiVideosResponse>
+    ): BaseResponse<VideoDTO>
 }
