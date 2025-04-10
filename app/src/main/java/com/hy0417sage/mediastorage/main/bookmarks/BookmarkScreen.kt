@@ -7,15 +7,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.hy0417sage.core.model.SearchItem
 import com.hy0417sage.core.ui.DisableOverScroll
-import com.hy0417sage.mediastorage.main.model.ItemViewData
 import com.hy0417sage.mediastorage.main.view.ListItemView
 
 @Composable
 fun BookmarkScreen(
     modifier: Modifier = Modifier,
 ) {
-    val items by remember { mutableStateOf(emptyList<ItemViewData>()) }
+    val items by remember { mutableStateOf(emptyList<SearchItem>()) }
 
     DisableOverScroll {
         LazyColumn(

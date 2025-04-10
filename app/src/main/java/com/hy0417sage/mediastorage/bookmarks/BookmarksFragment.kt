@@ -2,14 +2,12 @@ package com.hy0417sage.mediastorage.bookmarks
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hy0417sage.core.ui.BaseFragment
 import com.hy0417sage.core.util.Constants
 import com.hy0417sage.core.util.getImageList
 import com.hy0417sage.core.util.removeImageFromList
 import com.hy0417sage.mediastorage.databinding.FragmentBookmarksBinding
-import com.hy0417sage.mediastorage.main.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /*
@@ -19,9 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BookmarksFragment :
     BaseFragment<FragmentBookmarksBinding>(FragmentBookmarksBinding::inflate) {
-
-    private val viewModel: SharedViewModel by activityViewModels() /* Fragment간 정보 교환을 위한 activityViewModel */
-
     private val adapter = BookmarksItemAdapter(
         /* 내 보관함 탭에서 아이템을 클릭했을 때 */
         onClick = { item, adapter ->
@@ -29,7 +24,6 @@ class BookmarksFragment :
                 if (isFinishing)
                     return@run
                 adapter.removeItem(item.imageUrl)
-                viewModel.removeImage(item.imageUrl)
                 removeImageFromList(item)
             }
         }

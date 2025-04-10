@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hy0417sage.mediastorage.R
@@ -23,13 +24,14 @@ internal fun SearchWordInputView(
     modifier: Modifier = Modifier,
     initValue: String,
     onValueChange: (changedValue: String) -> Unit,
+    onSearchButtonClick: () -> Unit,
 ) {
     val isShowButton by remember(initValue) { mutableStateOf(initValue.isNotEmpty()) }
 
     InputView(
         modifier = modifier,
         initValue = initValue,
-        hint = "검색어를 입력해주세요.",
+        hint = stringResource(R.string.search_query_hint_message),
         onValueChange = onValueChange,
         iconContent = {
             Spacer(modifier = Modifier.width(8.dp))
@@ -52,6 +54,10 @@ internal fun SearchWordInputView(
             }
 
             Image(
+                modifier = Modifier
+                    .clickable {
+                        onSearchButtonClick()
+                    },
                 painter = painterResource(id = R.drawable.icon_search),
                 contentDescription = null
             )
@@ -70,6 +76,7 @@ private fun PreviewSearchWordInputView() {
             onValueChange = {
                 initValue = it
             },
+            onSearchButtonClick = {},
         )
     }
 }

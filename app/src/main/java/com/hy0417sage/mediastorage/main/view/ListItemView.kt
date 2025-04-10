@@ -1,13 +1,13 @@
 package com.hy0417sage.mediastorage.main.view
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -16,20 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.hy0417sage.core.model.SearchItem
 import com.hy0417sage.core.ui.CoilImageView
 import com.hy0417sage.mediastorage.R
-import com.hy0417sage.mediastorage.main.model.ItemViewData
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun ListItemView(
     modifier: Modifier = Modifier,
-    viewData: ItemViewData,
+    viewData: SearchItem,
 ) {
-    val isBookmark by viewData.isBookMark.collectAsState()
-    val bookmarkIcon by remember(isBookmark) {
+    val bookmarkIcon by remember(viewData.bookmark) {
         mutableIntStateOf(
-            if (isBookmark) {
+            if (viewData.bookmark) {
                 R.drawable.icon_bookmark_24
             } else {
                 R.drawable.icon_bookmark_border_24
@@ -39,24 +38,25 @@ fun ListItemView(
 
     Row(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         CoilImageView(
             modifier = Modifier
-                .aspectRatio(1f),
+                .width(200.dp),
             imageUrl = viewData.imageUrl,
         )
 
         Text(
             modifier = Modifier
                 .weight(1f),
-            text = viewData.createDate,
+            text = viewData.datetime,
         )
 
         Icon(
             painter = painterResource(id = bookmarkIcon),
-            tint = if (isBookmark) Color.Black else Color.LightGray,
+            tint = if (viewData.bookmark) Color.Black else Color.LightGray,
             contentDescription = null,
         )
     }
@@ -65,14 +65,12 @@ fun ListItemView(
 @Preview
 @Composable
 private fun PreviewSearchResultComponentView() {
-    val isBookMark = MutableStateFlow(false)
-
     Surface {
         ListItemView(
-            viewData = ItemViewData(
+            viewData = SearchItem(
                 imageUrl = "",
-                createDate = "2025년 4월 8일",
-                isBookMark = isBookMark,
+                datetime = "2025년 4월 8일",
+                bookmark = true,
             )
         )
     }

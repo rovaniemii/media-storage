@@ -24,14 +24,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.hy0417sage.mediastorage.main.model.NavItem
 
 @Composable
 fun BottomNavigationBar(
     modifier: Modifier = Modifier,
-    currentRoute: String?,
+    navController: NavHostController,
     onClick: (screenRoute: String) -> Unit,
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     Row(
         modifier = modifier
             .fillMaxWidth()

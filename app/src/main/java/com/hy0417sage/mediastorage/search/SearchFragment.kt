@@ -53,72 +53,50 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         setSearchItemFlowObserver()
     }
 
-    private fun setSearchView(){
+    private fun setSearchView() {
         /* searchView(검색 UI) Setting */
         binding.svSearch.setIconifiedByDefault(false)
         binding.svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.run {
-                    viewModel.firstSearchImages(this)
+                    viewModel.updateSearchQuery(this)
                 }
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
         })
     }
 
-    private fun setUiStateObserver(){
-        /* UIState Observer */
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collectLatest {
-                    /* ProgressBar */
-                    if (it.isLoading) {
-                        showProgressBar()
-                    } else {
-                        hideProgressBar()
-                    }
-                }
-            }
-        }
-
+    private fun setUiStateObserver() {
         /* 페이징 Error handling */
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.loadStateFlow.collectLatest {
-                    when(val currentState = it.refresh){
+                    when (val currentState = it.refresh) {
                         is LoadState.Error -> {
-                            when(currentState.error){
+                            when (currentState.error) {
                                 is UnknownHostException -> {
                                     binding.tvErrorMessage.text = getString(R.string.search_paging_network_message)
-                                    viewModel.setProgressBar(false)
                                 }
 
                                 is IndexOutOfBoundsException -> {
                                     Log.d("Search", "${currentState.error}")
                                     binding.tvErrorMessage.text = getString(R.string.search_paging_no_search_message)
-                                    viewModel.setProgressBar(false)
                                 }
 
                                 else -> {
-                                    binding.tvErrorMessage.text = getString(R.string.search_paging_error_message)
-                                    viewModel.setProgressBar(false)
+                                    binding.tvErrorMessage.text = getString(R.string.search_paging_unknown_error_message)
                                 }
                             }
                         }
-                        else -> { /* LoadState.NotLoading(불러온 상태), LoadState.Loading(로딩중 상태) */ }
-                    }
-                }
-            }
-        }
 
-        /* 내 보관함에서 아이템 삭제시 북마크 상태 변경을 위한 Observer */
-        lifecycleScope.launch {
-            viewModel.imageUrl.collectLatest {
-                it.getContentIfNotHandled()?.run {
-                    adapter.bookmarkChange(this)
+                        else -> { /* LoadState.NotLoading(불러온 상태), LoadState.Loading(로딩중 상태) */
+
+                        }
+                    }
                 }
             }
         }
@@ -128,8 +106,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         /* 첫번째 아이템 Observer */
         lifecycleScope.launch {
             viewModel.firstPagingData.collectLatest {
-                viewModel.setProgressBar(false)
-                viewModel.searchImages()
                 adapter.submitData(it)
             }
         }
@@ -140,15 +116,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 adapter.submitData(it)
             }
         }
-    }
-
-    private fun showProgressBar() {
-        binding.rvRecycler.visibility = View.GONE
-        binding.pbLoading.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        binding.rvRecycler.visibility = View.VISIBLE
-        binding.pbLoading.visibility = View.GONE
     }
 }
